@@ -19,5 +19,11 @@ if(!exec('composer'))
 EOF;
 }
 
+if(DIRECTORY_SEPARATOR == '\\')
+{
+    // 输出为中文.
+    exec('chcp 65001');
+}
+
 require 'vendor/autoload.php';
 require "src/start.php";
