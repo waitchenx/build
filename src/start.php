@@ -1,72 +1,40 @@
 <?php
 use app\components\FrameAdapter;
 
-// 开始获取输入信息.
-$input = '';
-$baseChoice = [
-    '1' =>  'ThinkPHP',
-    '2' =>  'Yii',
-    '3' =>  'Laravel',
-    '4' =>  'Slim'
-];
-
-echo <<<EOF
-请选择您所需要使用的框架:
-1:ThinkPHP    2:Yii
-3:Laravel     4:Slim
-5:退出 \n
-EOF;
-// 获取了基本的输入信息.
-while(!$input)
-{
-    $input = trim(fgets(STDIN));
-    if(!is_numeric($input) || !in_array($input,[1,2,3,4,5]))
+if(count($argv) > 1) {
+    $pos = array_search('composer.phar', $argv);
+    if($pos)
     {
-        $input = '';
-        echo <<<EOF
-您的选择有误,请重新选择: \n
-EOF;
-    }else{
-        if($input == 5)
+        $argv = array_slice($argv,$pos);
+    }
+    // 获取其中的参数.
+    $config = [];
+    foreach ($argv as $key=>$value)
+    {
+        if(strpos($value,'--name=') !== false)
         {
-            echo <<<EOF
-感谢您的使用,谢谢 \n
-EOF;
-            exit;
+            $config['type'] = substr($value,strlen('--name='));
         }
-        $input = $baseChoice[$input];
-    }
-}
-$baseDir = '';
-echo <<<EOF
-请输入您所需要安装的目录:\n
-EOF;
-while(!$baseDir)
-{
-    $baseDir = trim(fgets(STDIN));
-    if(!is_dir($baseDir))
-    {
-        $baseDir = '';
-        echo <<<EOF
-路径不存在,请重新选择:\n
-EOF;
-    }
-}
 
-$project_name = '';
+        if(strpos($value,'--path=') !== false)
+        {
+            $config['baseDir'] = substr($value,strlen('--path='));
+        }
 
-echo <<<EOF
-请输入项目名,最好是英文:\n
-EOF;
-while(!$project_name)
-{
-    $project_name = trim(fgets(STDIN));
-    if(!$project_name)
+        if(strpos($value,'-P=') !== false)
+        {
+            $config['projectName'] = substr($value,strlen('-P='));
+        }
+    }
+    if(count($config) != 3)
     {
         echo <<<EOF
-请正确输入项目名: \n
+请输入正确参数:例如 php frame.phar --name=thinkphp --path=path -P=test
 EOF;
+        exit;
     }
+}else{
+    $config = require __DIR__ . '/init.php';
 }
 
 $frame = FrameAdapter::instance([
@@ -75,4 +43,4 @@ $frame = FrameAdapter::instance([
 ]);
 
 // 开始执行安装脚本.
-$frame->setAdapter($input)->install();
+$frame->setAdapter($config['type'])->install();
