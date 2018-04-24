@@ -1,0 +1,21 @@
+{
+    "name": "adolph/build",
+    "description": "框架下载器",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "adolph",
+            "email": "1138027478@qq.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\" :   "src//",
+            "app\\common\\" : "src//common//",
+            "app\\components\\" : "src//components//",
+            "app\\components\\adapter\\" : "src//components//adapter//"
+        }
+    }
+}
