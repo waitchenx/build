@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 class FrameAdapter extends BaseComponent
 {
     private static $adapters = [
-        'Yii','ThinkPHP','Laravel','Slim'
+        'Yii','ThinkPHP','Laravel'
     ];
 
     private static $instance;

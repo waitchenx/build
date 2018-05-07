@@ -6,7 +6,6 @@ $baseChoice = [
     '1' =>  'ThinkPHP',
     '2' =>  'Yii',
     '3' =>  'Laravel',
-    '4' =>  'Slim'
 ];
 
 echo <<<EOF
