@@ -43,4 +43,4 @@ $frame = FrameAdapter::instance([
 ]);
 
 // 开始执行安装脚本.
-$frame->setAdapter($config['type'])->install();
+$frame->setAdapter($config['type'])->run();

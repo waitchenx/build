@@ -10,5 +10,5 @@ abstract class BaseAdapter
     // 程序初始化
     abstract public function init();
     // 初始化mysql
-    abstract public function init_mysql();
+    abstract public function init_mysql($baseDir,$config);
 }

@@ -4,6 +4,7 @@ namespace app\components;
 
 use app\common\Constant;
 use app\components\adapter\BaseAdapter;
+use Symfony\Component\Process\Process;
 
 class FrameAdapter extends BaseComponent
 {
@@ -51,13 +52,13 @@ class FrameAdapter extends BaseComponent
             return $this->_err('请设置对应的适配器.',Constant::NOT_FOUND);
         }
         try{
-            $ret = $this->adapter->install($this->config['baseDir'],$this->config['projectName']);
+            $command = $this->adapter->install($this->config['baseDir'],$this->config['projectName']);
 
-            if(!$ret)
+            if(!$command)
             {
                 return $this->_err('安装失败');
             }
-            return true;
+            return $command;
         }catch (\Exception $e) {
             return $this->_err($e->getMessage());
         }
@@ -85,5 +86,47 @@ class FrameAdapter extends BaseComponent
         }
 
         return self::$instance;
+    }
+
+    // 执行run方法.
+    public function run()
+    {
+        // 先安装,获取install的命令.
+        $command = $this->install();
+        if(!$command)
+        {
+            exit("\n" . $this->getLastMsg() . "\n");
+        }
+        // 然后根据框架来获取对应的信息.
+        $process = new Process($command);
+        $process->start();
+        // 输出信息.
+        $process->wait(function($type,$buffer){
+            echo $buffer;
+        });
+
+        if(!$process->isSuccessful())
+        {
+            if(!$this->init()){
+                echo "\n" . $this->getLastMsg() . "\n";
+                exit;
+            }
+            echo "\n安装完成\n";
+            exit;
+        }
+    }
+
+    private function init()
+    {
+        try{
+            $this->adapter->init();
+            // 项目地址
+            $baseDir = $this->config['baseDir'] . '/' . $this->config['projectName'];
+            // 初始化mysql.
+            $this->adapter->init_mysql($baseDir,$this->config['mysql']);
+            return true;
+        }catch (\Exception $e){
+            return $this->_err($e->getMessage());
+        }
     }
 }

@@ -37,40 +37,64 @@ EOF;
         $input = $baseChoice[$input];
     }
 }
-$baseDir = '';
+
 echo <<<EOF
 请输入您所需要安装的目录:\n
 EOF;
-while(!$baseDir)
-{
-    $baseDir = trim(fgets(STDIN));
-    if(!is_dir($baseDir))
-    {
-        $baseDir = '';
-        echo <<<EOF
-路径不存在,请重新选择:\n
-EOF;
-    }
-}
-
-$project_name = '';
+$baseDir = input("路径不存在,请重新选择:\n",2);
 
 echo <<<EOF
 请输入项目名,最好是英文:\n
 EOF;
-while(!$project_name)
-{
-    $project_name = trim(fgets(STDIN));
-    if(!$project_name)
-    {
-        echo <<<EOF
-请正确输入项目名: \n
+$project_name = input("请正确输入项目名: \n");
+
+echo <<<EOF
+请输入mysql数据配置:(示例,host:port:dbname:username:password)\n
 EOF;
+$mysql_config = input("请输入正确的mysql配置\n",3);
+$mysql_config = explode(':',$mysql_config);
+function input($msg,$type = 1)
+{
+    $config = '';
+    while(!$config)
+    {
+        $config = trim(fgets(STDIN));
+        $ret = false;
+        switch ($type){
+            case 1:
+                if(!$config) $ret = true;
+                break;
+            case 2:
+                if(!is_dir($config)) {
+                    $ret = true;
+                    $config = '';
+                }
+                break;
+            case 3:
+                if(str_word_count($config,':') !== 4 || !strpos($config,':')){
+                    $ret = true;
+                    $config = '';
+                }
+        }
+
+        if($ret)
+        {
+            echo $msg;
+        }
     }
+    return $config;
 }
+
 
 return [
     'projectName'   =>  $project_name,
     'baseDir'       =>  $baseDir,
-    'type'          =>  $input
+    'type'          =>  $input,
+    'mysql'         =>  [
+        'host'      =>  $mysql_config[0],
+        'port'      =>  $mysql_config[1],
+        'dbname'    =>  $mysql_config[2],
+        'username'  =>  $mysql_config[3],
+        'password'  =>  $mysql_config[4],
+    ]
 ];
