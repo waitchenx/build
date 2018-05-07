@@ -95,12 +95,13 @@ class FrameAdapter extends BaseComponent
         $command = $this->install();
         if(!$command)
         {
-            exit("\n" . $this->getLastMsg() . "\n");
+            exit($this->getLastMsg() . "\n");
         }
         // 然后根据框架来获取对应的信息.
         $process = new Process($command);
         $process->setTimeout(0);
         $process->setIdleTimeout(0);
+        echo "开始安装{$this->config['type']},请耐心等待...\n";
         $process->start();
         // 输出信息.
         $process->wait(function($type,$buffer){
@@ -110,10 +111,10 @@ class FrameAdapter extends BaseComponent
         if($process->isSuccessful())
         {
             if(!$this->init()){
-                echo "\n" . $this->getLastMsg() . "\n";
+                echo $this->getLastMsg() . "\n";
                 exit;
             }
-            echo "\n安装完成\n";
+            echo "安装完成\n";
             exit;
         }
     }
