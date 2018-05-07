@@ -29,7 +29,7 @@ class Yii extends BaseAdapter
             return false;
         }
         $content = file_get_contents($db_file);
-        $conn = "mysql:host={$config['host']};dbname={$config['db_name']}";
+        $conn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['db_name']}";
         // 这里是替换基本的数据.
         $content = preg_replace('/(mysql\w+yii2basic)/',$conn,$content);
         $content = preg_replace('/(username\' => \'root\')',"username' => '{$config['username']}'",$content);

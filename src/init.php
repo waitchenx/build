@@ -93,8 +93,8 @@ return [
     'mysql'         =>  [
         'host'      =>  $mysql_config[0],
         'port'      =>  $mysql_config[1],
-        'dbname'    =>  $mysql_config[2],
+        'db_name'   =>  $mysql_config[2],
         'username'  =>  $mysql_config[3],
-        'password'  =>  $mysql_config[4],
+        'pwd'       =>  $mysql_config[4],
     ]
 ];
