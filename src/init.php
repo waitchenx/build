@@ -11,7 +11,7 @@ $baseChoice = [
 echo <<<EOF
 请选择您所需要使用的框架:
 1:ThinkPHP    2:Yii
-3:Laravel     4:Slim
+3:Laravel     
 5:退出 \n
 EOF;
 
