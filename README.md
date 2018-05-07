@@ -10,7 +10,7 @@ mv frame.phar /usr/local/bin/frame
 ```
 ### 使用
 ```
-frame -- 或者 php frame.php
+frame -- 或者 php frame.phar
 ```
 即可按照图文安装
 ### 其他
