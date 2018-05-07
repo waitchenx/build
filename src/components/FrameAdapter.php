@@ -99,13 +99,15 @@ class FrameAdapter extends BaseComponent
         }
         // 然后根据框架来获取对应的信息.
         $process = new Process($command);
+        $process->setTimeout(0);
+        $process->setIdleTimeout(0);
         $process->start();
         // 输出信息.
         $process->wait(function($type,$buffer){
             echo $buffer;
         });
 
-        if(!$process->isSuccessful())
+        if($process->isSuccessful())
         {
             if(!$this->init()){
                 echo "\n" . $this->getLastMsg() . "\n";

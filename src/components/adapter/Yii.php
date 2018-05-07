@@ -31,9 +31,9 @@ class Yii extends BaseAdapter
         $content = file_get_contents($db_file);
         $conn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['db_name']}";
         // 这里是替换基本的数据.
-        $content = preg_replace('/(mysql\w+yii2basic)/',$conn,$content);
-        $content = preg_replace('/(username\' => \'root\')',"username' => '{$config['username']}'",$content);
-        $content = preg_replace('/(password\' => \'\')',"password' => '{$config['pwd']}'",$content);
+        $content = preg_replace('/(mysql.+yii2basic)/',$conn,$content);
+        $content = preg_replace("/(username' => 'root')/","username' => '{$config['username']}'",$content);
+        $content = preg_replace("/(password' => '')/","password' => '{$config['pwd']}'",$content);
         // 这里就生成了数据库配置了.
         file_put_contents($db_file,$content);
         return true;

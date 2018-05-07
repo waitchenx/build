@@ -37,10 +37,7 @@ EOF;
     $config = require __DIR__ . '/init.php';
 }
 
-$frame = FrameAdapter::instance([
-    'baseDir'       =>  $baseDir,
-    'projectName'   =>  $project_name
-]);
+$frame = FrameAdapter::instance($config);
 
 // 开始执行安装脚本.
 $frame->setAdapter($config['type'])->run();
