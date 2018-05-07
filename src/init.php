@@ -71,7 +71,7 @@ function input($msg,$type = 1)
                 }
                 break;
             case 3:
-                if(str_word_count($config,':') !== 4 || !strpos($config,':')){
+                if(substr_count($config,':') !== 4 || !strpos($config,':')){
                     $ret = true;
                     $config = '';
                 }
