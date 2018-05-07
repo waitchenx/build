@@ -2,7 +2,7 @@
 目前只适用linux,不支持windows.只要用于提供安装框架的便利.而不用找对应的官方文档.目前可安装框架yii,其他框架正在适配中.请等待下.
 ### 安装
 安装前请确保安装了php,和composer
-请点击此处[下载](https://github.com/AdolphGithub/build/frame.phar)安装.
+请点击此处[下载](https://raw.githubusercontent.com/AdolphGithub/build/master/frame.phar)安装.
 如果想默认为系统命令,请使用如下
 ```
 chmod a+x frame.phar
