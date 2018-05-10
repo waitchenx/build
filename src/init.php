@@ -1,18 +1,16 @@
 <?php
 
+use \app\common\Constant;
+
 // 开始获取输入信息.
 $input = '';
-$baseChoice = [
-    '1' =>  'ThinkPHP',
-    '2' =>  'Yii',
-    '3' =>  'Laravel',
-];
+$baseChoice = Constant::allow_frame;
 
 echo <<<EOF
 请选择您所需要使用的框架:
 1:ThinkPHP    2:Yii
 3:Laravel     
-5:退出 \n
+q:退出 \n
 EOF;
 
 // 获取了基本的输入信息.
@@ -26,7 +24,7 @@ while(!$input)
 您的选择有误,请重新选择: \n
 EOF;
     }else{
-        if($input == 5)
+        if($input == 'q')
         {
             echo <<<EOF
 感谢您的使用,谢谢 \n
